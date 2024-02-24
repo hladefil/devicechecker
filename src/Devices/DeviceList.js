@@ -59,10 +59,6 @@ function DeviceList() {
     return (
         <Paper elevation={10} className={classes.root}>
             <p>medved</p>
-            <p>opice</p>
-            <p>čert</p>
-            <p>kulich</p>
-            <p>gremlin</p>
         </Paper>
     )
 }
