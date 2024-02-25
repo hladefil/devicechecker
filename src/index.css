@@ -1,8 +1,8 @@
 body {
-
+    margin: 0;
 }
 .bg {
-    background: url('../public/canvas.jpg') no-repeat;
+    background: url('Images/canvas.jpg') no-repeat;
     background-size: cover;
     height: 100%;
     width: 100%;
@@ -90,4 +90,15 @@ body {
 }
 .star-field .layer:nth-child(3) {
     animation: sf-fly-by-3 10s linear infinite;
+}
+
+p {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
 }

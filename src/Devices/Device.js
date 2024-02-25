@@ -3,6 +3,7 @@ import {Divider, Paper, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core";
 import {userContext} from "../GlobalState/UserContext";
 import NoImage from "../Images/No-Image-Placeholder.svg.png"
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -12,27 +13,29 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "row",
         width: "20%",
         height: "45%",
-        backgroundColor: "red"
+        backgroundColor: "white"
     },
-    detailContainer:{
+    detailContainer: {
         marginTop: "2em",
         marginBottom: "2em",
         width: "100%",
         height: "100%",
-        backgroundColor: "blue"
+        backgroundColor: "transparent"
     },
 
     deviceImages: {
         width: "40%",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        marginLeft: "0.3em"
     },
 
     headline: {
-        // display: "flex",
-        // flexDirection: "column",
-        // backgroundColor: "orange",
-        // width: "100%",
-        // height: "100%"
+        display: "flex",
+        flexDirection: "column",
+        marginTop: "1em",
+        marginBottom: "1.5em",
+        marginRight: "0.3em",
+        height: "35%"
     },
 }))
 
@@ -45,27 +48,30 @@ function Device({data}) {
 
 
     useEffect(() => {
-        console.log(data.image)
+        // console.log(data.image)
         setDeviceSpecs(data)
     }, []);
 
     return (
-        <Paper elevation={10} className={classes.root}>
-            <img src={(data.image !== undefined) ? data.image : NoImage} className={classes.deviceImages} alt="device image"/>
-            <div className={classes.detailContainer}>
-                {/*<h3> {data.vendor + " " + data.model} </h3>*/}
+            <Paper elevation={10} className={classes.root}>
+                <img src={(data.image !== undefined) ? data.image : NoImage} className={classes.deviceImages}
+                     alt="device image"/>
+                <div className={classes.detailContainer}>
+                    <div className={classes.headline}>
+                        <h4 style={{marginBottom: "0"}}> {data.model} </h4>
+                        <p style={{fontSize: "80%", marginTop: "0.2em"}}> {data.vendor} </p>
+                        <p style={{fontSize: "70%"}}> {data.os} / {data.osVersion}</p>
 
-                <div className={classes.headline}>
-                    <h3 style={{backgroundColor: "green"}}> {data.vendor} </h3>
-                    <h4 style={{backgroundColor: "limegreen"}}> {data.model} </h4>
+                    </div>
+                    <Button
+                        variant="contained"
+                        size="small"
+                        style={{marginRight: "0.3em", width: "80%", color: "white", backgroundColor: "black"}}
+                    >
+                        PŮJČIT
+                    </Button>
                 </div>
-
-                <p> {data.model} </p>
-                <p> {data.model} </p>
-                <p> {data.os} </p>
-                <p> BORROWED </p>
-            </div>
-        </Paper>
+            </Paper>
     )
 }
 

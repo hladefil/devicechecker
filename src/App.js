@@ -1,7 +1,7 @@
 import './App.css';
 import {userContext} from './GlobalState/UserContext';
 import Login from "./Authentication/Login";
-
+import React from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import DeviceList from "./Devices/DeviceList"
