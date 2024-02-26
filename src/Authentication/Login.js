@@ -88,6 +88,8 @@ function Login() {
                 return response.json()
             }).then(data => {
 
+            //context.user(data)
+
             context.id(data.id)
             context.name(data.name)
             context.email(email)

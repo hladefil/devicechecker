@@ -5,6 +5,7 @@ import React from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import DeviceList from "./Devices/DeviceList"
+import CreateDeviceForm from "./Devices/CreateDeviceForm";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
 
     const [loggedIn, setLoggedIn] = useState(false);
 
+    const [userObject, setUserObject] = useState();
     const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
@@ -25,25 +27,35 @@ function App() {
         setLoggedIn(false);
     }
 
+    const user = (value) => {
+        setUserObject(value);
+    }
+
     const id = (value) => {
         setUserId(value);
     }
 
     const name = (value) => {
         setUserName(value);
+        sessionStorage.setItem('userName', value);
     }
 
 
     const email = (value) => {
         setUserEmail(value);
+        sessionStorage.setItem('userEmail', value);
+
     }
 
     const role = (value) => {
         setUserRole(value);
+        sessionStorage.setItem('userRole', value);
+
     }
 
     const token = (value) => {
         setUserToken(value);
+        sessionStorage.setItem('userToken', value);
     }
 
     const getId = () => {
@@ -68,9 +80,28 @@ function App() {
         return userToken
     }
 
+    const getUser = () => {
+        return userObject
+    }
+
+    // useEffect(() => {
+    //     console.log(userObject)
+    // }, [userObject]);
+
     useEffect(() => {
-        console.log(userRole)
-    }, [userRole]);
+        const storedName = sessionStorage.getItem('userName');
+        const storedToken = sessionStorage.getItem('userToken');
+        const storedEmail = sessionStorage.getItem('userEmail');
+        const storedRole = sessionStorage.getItem('userRole');
+
+        if(userName !== undefined) setUserName(userName)
+        if(storedToken !== undefined) {
+            console.log(storedToken)
+            setUserToken(storedToken)
+        }
+        if(storedEmail !== undefined) setUserEmail(storedEmail)
+        if(storedRole !== undefined) setUserName(storedRole)
+    }, []);
 
     // function renderSwitch() {
     //     switch (role) {
@@ -109,7 +140,9 @@ function App() {
                     email: email,
                     role: role,
                     token: token,
+                    user: user,
 
+                    getUser: getUser,
                     getId: getId,
                     getName: getName,
                     getRole: getRole,
@@ -123,6 +156,8 @@ function App() {
                             {/*{renderSwitch()}*/}
                             <Route path="/" element={<Login/>}/>
                             <Route path="/devices" element={<DeviceList/>}/>
+                            <Route path="/createdevice" element={<CreateDeviceForm/>}/>
+
                         </Routes>
                     </Router>
                 </userContext.Provider>

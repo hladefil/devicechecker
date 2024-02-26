@@ -3,6 +3,8 @@ import React from 'react';
 const userContext = React.createContext({
     isLoggedIn: false,
     token: null,
+    user: () => {
+    },
     login: () => {
     },
     logout: () => {
@@ -16,6 +18,8 @@ const userContext = React.createContext({
     role: (value) => {
     },
 
+    getUser: () => {
+    },
     getId: () => {
     },
     getName: () => {
