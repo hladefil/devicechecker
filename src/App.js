@@ -100,7 +100,7 @@ function App() {
             setUserToken(storedToken)
         }
         if(storedEmail !== undefined) setUserEmail(storedEmail)
-        if(storedRole !== undefined) setUserName(storedRole)
+        if(storedRole !== undefined) setUserRole(storedRole)
     }, []);
 
     // function renderSwitch() {
@@ -156,8 +156,9 @@ function App() {
                             {/*{renderSwitch()}*/}
                             <Route path="/" element={<Login/>}/>
                             <Route path="/devices" element={<DeviceList/>}/>
+                            {getRole() === "admin" &&
                             <Route path="/createdevice" element={<CreateDeviceForm/>}/>
-
+                            }
                         </Routes>
                     </Router>
                 </userContext.Provider>
