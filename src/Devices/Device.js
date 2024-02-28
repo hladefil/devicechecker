@@ -7,6 +7,16 @@ import NoImage from "../Images/No-Image-Placeholder.svg.png"
 
 
 const useStyles = makeStyles(theme => ({
+    media: {
+        height: 200, // Default height for smaller devices
+
+        [theme.breakpoints.up('lg')]: {
+            height: 200, // Height for devices with screen width >= 1280px
+        },
+        [theme.breakpoints.up('xl')]: {
+            height: 300, // Height for devices with screen width >= 1920px
+        },
+    },
     root: {
         display: "flex",
         justifyContent: "center",
@@ -35,6 +45,16 @@ const useStyles = makeStyles(theme => ({
         marginRight: "0.3em",
         height: "35%"
     },
+    HandlingButton:{
+        [theme.breakpoints.up('lg')]: {
+            marginTop: "3em",
+            width: "90%"
+        },
+        [theme.breakpoints.up('xl')]: {
+            marginTop: "0",
+            width: "50%",
+        },
+    }
 }))
 
 function Device({data}) {
@@ -171,7 +191,7 @@ function Device({data}) {
                         alt="green iguana"
                         height="300"
                         image={(data.image !== undefined) ? data.image : NoImage}
-                        className={classes.deviceImages}
+                        className={`${classes.deviceImages} ${classes.media}`}
                     />
                 </Grid>
                 <Grid item xs={7}>
@@ -201,8 +221,8 @@ function Device({data}) {
                                 disabled={bookIsBorrowed && !returnOptionButton}
                                 variant="contained"
                                 size="small"
+                                className={classes.HandlingButton}
                                 style={{
-                                    width: "50%",
                                     height: "35%",
                                     color: bookIsBorrowed && !returnOptionButton ? "whitesmoke" : "white",
                                     backgroundColor: bookIsBorrowed && !returnOptionButton ? "grey" : "black"
