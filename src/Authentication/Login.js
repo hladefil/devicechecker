@@ -4,7 +4,8 @@ import {Typography, Grid, Paper, Icon, IconButton, InputAdornment, Box, CssBasel
 import {Error, MailOutlined, Visibility, VisibilityOff,} from '@mui/icons-material';
 import {makeStyles} from '@mui/styles';
 import {userContext} from "../GlobalState/UserContext";
-
+import "./Login.css"
+import honza from "../Images/honza.png"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -118,6 +119,10 @@ function Login() {
         }}>
             <CssBaseline/>
 
+            <div className="flier">
+                <img src={honza} alt="Girl in a jacket" width="250" height="300"/>
+            </div>
+            
             <Box variant="outlined" className={classes.paper}>
                 <div style={{textAlign: "center"}}>
                     <Typography style={{color: "white"}} component="h1" variant="h2">
