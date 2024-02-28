@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom";
-import {IconButton, Typography, Button, makeStyles} from "@material-ui/core";
+import {IconButton, Typography, Button} from '@mui/material/';
 import {FormControl, InputLabel, MenuItem, Container, Select, Grid} from '@mui/material';
-import {Clear} from "@material-ui/icons";
+import {Clear} from '@mui/icons-material';
+import {makeStyles} from '@mui/styles';
 import {userContext} from "../GlobalState/UserContext";
 import Device from "./Device"
 
@@ -73,20 +74,24 @@ const useStyles = makeStyles(theme => ({
         width: "200px"
     },
     createDeviceButton: {
-        backgroundColor: "white",
-        color: "black",
-        '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.7)',
-        },
+        "&&": {
+            backgroundColor: "white",
+            color: "black",
+            '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            },
+        }
     },
     clearButton: {
-        paddingLeft: "0.7em",
-        paddingRight: "0.7em",
-        backgroundColor: "white",
-        '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        "&&": {
+            paddingLeft: "0.7em",
+            paddingRight: "0.7em",
+            backgroundColor: "white",
+            '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.7)',
 
-        },
+            },
+        }
     },
     mainBox: {
         display: "flex",
@@ -149,7 +154,7 @@ function DeviceList() {
     const HandleClearSelections = () => {
         if (vendor !== "" || !vendor) setVendor("")
         if (oSystem !== "" || !oSystem) setOSystem("")
-        else setArrayOfDevices(originalArrayOfDevices)
+        if (vendor!== "" || oSystem !== "") setArrayOfDevices(originalArrayOfDevices)
     }
 
     useEffect(() => {

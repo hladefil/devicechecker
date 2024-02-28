@@ -1,7 +1,8 @@
 import React, {useContext, useState} from "react"
 import {useNavigate} from "react-router-dom";
-import {Box, Grid, Icon, IconButton, makeStyles, Paper, Typography, Button, Container, TextField} from "@material-ui/core";
-import {ArrowBack, Error} from "@material-ui/icons";
+import {Box, Grid, Icon, IconButton, Paper, Typography, Button, Container, TextField} from '@mui/material/';
+import {ArrowBack, Error} from '@mui/icons-material';
+import {makeStyles} from '@mui/styles';
 import {userContext} from "../GlobalState/UserContext";
 
 

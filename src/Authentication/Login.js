@@ -1,8 +1,10 @@
 import React, {useContext, useState} from "react"
 import {useNavigate} from "react-router-dom";
-import {Typography, Grid, Paper, Icon, IconButton, makeStyles, InputAdornment, Box, CssBaseline, Button, TextField, Container} from "@material-ui/core";
-import {Error, MailOutlined, Visibility, VisibilityOff,} from "@material-ui/icons";
+import {Typography, Grid, Paper, Icon, IconButton, InputAdornment, Box, CssBaseline, Button, TextField, Container} from '@mui/material/';
+import {Error, MailOutlined, Visibility, VisibilityOff,} from '@mui/icons-material';
+import {makeStyles} from '@mui/styles';
 import {userContext} from "../GlobalState/UserContext";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,13 +18,15 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
     },
     submit: {
-        margin: theme.spacing(5, 0, 2),
-        backgroundColor: "black",
-        color: "white",
-        '&:hover': {
+        "&&": {
+            marginTop: "3em",
+            backgroundColor: "black",
             color: "white",
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        },
+            '&:hover': {
+                color: "white",
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            },
+        }
     },
     paper: {
         backgroundColor: 'rgba(0, 0, 0, 0.01)',
@@ -187,6 +191,12 @@ function Login() {
                             fullWidth
                             variant="contained"
                             size="large"
+                            // style={{ marginTop: "3em",
+                            //     backgroundColor: "black",
+                            //     color: "white", '&:hover': {
+                            //         color: "white",
+                            //         backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            //     },}}
                             className={classes.submit}
                             onClick={HandleSubmit}
                         >

@@ -6,8 +6,15 @@ import {userContext} from './GlobalState/UserContext';
 import Login from "./Authentication/Login";
 import DeviceList from "./Devices/DeviceList"
 import CreateDeviceForm from "./Devices/CreateDeviceForm";
+import {ThemeProvider} from '@mui/styles';
+import {createTheme} from "@mui/material";
+
 
 function App() {
+
+    const theme = createTheme({
+
+    })
 
     const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
@@ -120,26 +127,27 @@ function App() {
                 <div className="layer"/>
             </div>
             <main>
+                <ThemeProvider theme={theme}>
+                    <userContext.Provider value={{
+                        id: id,
+                        name: name,
+                        email: email,
+                        role: role,
+                        token: token,
 
-                <userContext.Provider value={{
-                    id: id,
-                    name: name,
-                    email: email,
-                    role: role,
-                    token: token,
-
-                    getId: getId,
-                    getName: getName,
-                    getRole: getRole,
-                    getEmail: getEmail,
-                    getToken: getToken
-                }}>
-                    <Router>
-                        <Routes>
-                            {renderSwitch()}
-                        </Routes>
-                    </Router>
-                </userContext.Provider>
+                        getId: getId,
+                        getName: getName,
+                        getRole: getRole,
+                        getEmail: getEmail,
+                        getToken: getToken
+                    }}>
+                        <Router>
+                            <Routes>
+                                {renderSwitch()}
+                            </Routes>
+                        </Router>
+                    </userContext.Provider>
+                </ThemeProvider>
 
             </main>
         </div>

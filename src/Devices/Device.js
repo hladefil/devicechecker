@@ -1,59 +1,70 @@
 import React, {useContext, useEffect, useState} from "react"
-import {Card, CardContent, CardMedia, Grid} from "@mui/material";
-import {Box, Typography, makeStyles} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import {Card, CardContent, CardMedia, Grid, Box, Typography, Button} from "@mui/material";
+import {makeStyles} from '@mui/styles';
 import {userContext} from "../GlobalState/UserContext";
 import NoImage from "../Images/No-Image-Placeholder.svg.png"
 
 
 const useStyles = makeStyles(theme => ({
     media: {
-        height: 200, // Default height for smaller devices
+        "&&": {
+            height: 200, // Default height for smaller devices
 
-        [theme.breakpoints.up('lg')]: {
-            height: 200, // Height for devices with screen width >= 1280px
-        },
-        [theme.breakpoints.up('xl')]: {
-            height: 300, // Height for devices with screen width >= 1920px
-        },
+            [theme.breakpoints.up('lg')]: {
+                height: 200, // Height for devices with screen width >= 1280px
+            },
+            [theme.breakpoints.up('xl')]: {
+                height: 300, // Height for devices with screen width >= 1920px
+            },
+        }
     },
     root: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
-        height: "160%",
-        backgroundColor: "white",
+        "&&": {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+            height: "160%",
+            backgroundColor: "white",
+        }
     },
     detailContainer: {
-        marginTop: "2em",
-        marginBottom: "2em",
-        width: "100%",
-        height: "100%",
-        backgroundColor: "transparent"
+        "&&": {
+            marginTop: "2em",
+            marginBottom: "2em",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "transparent"
+        }
     },
 
     deviceImages: {
-        marginLeft: "0.3em"
+        "&&": {
+            marginLeft: "0.3em"
+        }
     },
 
     headline: {
-        display: "flex",
-        flexDirection: "column",
-        marginTop: "1em",
-        marginBottom: "1.5em",
-        marginRight: "0.3em",
-        height: "35%"
+        "&&": {
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "1em",
+            marginBottom: "1.5em",
+            marginRight: "0.3em",
+            height: "35%"
+        }
     },
-    HandlingButton:{
-        [theme.breakpoints.up('lg')]: {
-            marginTop: "3em",
-            width: "90%"
-        },
-        [theme.breakpoints.up('xl')]: {
-            marginTop: "0",
-            width: "50%",
-        },
+    HandlingButton: {
+        "&&": {
+            [theme.breakpoints.up('lg')]: {
+                marginTop: "3em",
+                width: "90%"
+            },
+            [theme.breakpoints.up('xl')]: {
+                marginTop: "1em",
+                width: "50%",
+            },
+        }
     }
 }))
 
@@ -200,7 +211,7 @@ function Device({data}) {
                             <Typography component="div" variant="h5">
                                 {data.model}
                             </Typography>
-                            <Typography sx={{marginTop: "20em"}} variant="subtitle1" component="p">
+                            <Typography variant="subtitle1" component="p">
                                 {data.vendor}
                             </Typography>
                             <Typography variant="subtitle1" component="p">
