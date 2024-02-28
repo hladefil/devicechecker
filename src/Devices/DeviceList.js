@@ -147,10 +147,8 @@ function DeviceList() {
     };
 
     const HandleClearSelections = () => {
-        console.log(vendor)
-        console.log(oSystem)
-        if (vendor !== "") setVendor("")
-        if (oSystem !== "") setOSystem("")
+        if (vendor !== "" || !vendor) setVendor("")
+        if (oSystem !== "" || !oSystem) setOSystem("")
         else setArrayOfDevices(originalArrayOfDevices)
     }
 
