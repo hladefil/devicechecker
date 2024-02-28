@@ -1,27 +1,16 @@
-import React, {useContext, useEffect, useRef, useState} from "react"
-import {userContext} from "../GlobalState/UserContext";
+import React, {useContext, useState} from "react"
 import {useNavigate} from "react-router-dom";
-import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import {Box, Grid, Icon, IconButton, InputAdornment, makeStyles, Paper, Typography} from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import {
-    Error,
-    Fingerprint,
-    Group,
-    History, Image,
-    MailOutlined, Settings,
-    Smartphone,
-    Visibility,
-    VisibilityOff
-} from "@material-ui/icons";
-import Button from "@material-ui/core/Button";
+import {Box, Grid, Icon, IconButton, makeStyles, Paper, Typography, Button, Container, TextField} from "@material-ui/core";
+import {ArrowBack, Error} from "@material-ui/icons";
+import {userContext} from "../GlobalState/UserContext";
+
 
 const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
         backgroundColor: "black",
         color: "white",
+        width: '70%',
         '&:hover': {
             color: "white",
             backgroundColor: 'rgba(0, 0, 0, 0.7)',
@@ -42,19 +31,18 @@ const useStyles = makeStyles((theme) => ({
     iconDone: {
         marginLeft: theme.spacing(2),
     },
-
-
     container: {
         height: "100vh",
         justifyContent: "center",
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
     },
     mainBox: {
         paddingLeft: theme.spacing(2),
         paddingBottom: theme.spacing(2),
         paddingRight: theme.spacing(2),
         width: "100%",
+        marginBottom: "4em",
     },
     root: {
         marginTop: theme.spacing(2),
@@ -64,12 +52,10 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column"
-        //width: '100%',
-        // marginTop: theme.spacing(2),
     },
     textField: {
         width: '70%'
-    }
+    },
 }));
 
 function CreateDeviceForm() {
@@ -87,9 +73,6 @@ function CreateDeviceForm() {
 
     const [errorOccurenceMessage, setErrorOccurenceMessage] = useState(false);
     const [succesCreationMessage, setSuccesCreationMessage] = useState(false);
-
-
-    const [focusTextFieldHandler, setFocusTextFieldHandler] = useState(false);
 
 
     function HandleSubmit() {
@@ -131,19 +114,9 @@ function CreateDeviceForm() {
                 }).then(data => {
                 console.log(data)
             })
-
-            //context.user(data)
-
-            // context.id(data.id)
-            // context.name(data.name)
-            // context.email(email)
-            // context.role(data.type)
-            // context.token(data.token)
-
             setTimeout(() => {
-                // Replace '/your-target-route' with the route you want to navigate to
                 navigate('/devices');
-            }, 3000); // 1000 milliseconds (1 second)
+            }, 1500); // 1000 milliseconds (1 second)
 
         } else {
             console.log("JSEM OUTSIDE")
@@ -207,177 +180,202 @@ function CreateDeviceForm() {
 //         />
 //     )
 // }
+    function routeBack() {
+        navigate("/devices");
+    };
 
     return (
-        <Container component="main" maxWidth="xs" className={classes.container}>
+        <>
+            <div style={{textAlign: "left", width: "10vw"}}>
+                <IconButton  style={{backgroundColor: "white",
+                marginTop: "1em",
+                marginLeft: "1em",
+                borderRadius: "600",
+                '&:hover': {backgroundColor: 'rgba(255, 255, 255, 0.7)',}}}
+                    onClick={routeBack}>
+                    <ArrowBack style={{color: "black"}}/>
+                </IconButton>
 
-            <Box variant="outlined" className={classes.mainBox}>
-                <Typography style={{color: "white", textAlign: "center"}} variant="h2">
-                    Nové zařízení
-                </Typography>
+            </div>
 
-                <div className={classes.root}>
-                    <form className={classes.form} noValidate>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                {/*<MyTextField value={id} label="Kódové označení (identifikátor)" onChangeHandler={setId} icon={<Fingerprint/>}/>*/}
+            <Container component="main" maxWidth="xs" className={classes.container}>
+                <Box variant="outlined" className={classes.mainBox}>
+                    <Typography style={{color: "white", textAlign: "center"}} variant="h2">
+                        Nové zařízení
+                    </Typography>
 
-                                <TextField
-                                    variant="filled"
-                                    onKeyDown={handleKeypress}
-                                    required
-                                    autoFocus
-                                    className={classes.textField}
-                                    id="id"
-                                    label="Kódové označení"
-                                    value={id}
-                                    onChange={(event) => setId(event.target.value)}
-                                    name="id"
-                                    autoComplete="id"
-                                    InputProps={{
-                                        style: {backgroundColor: 'rgb(232, 240, 254)',}
-                                    }}
-                                />
+                    <div className={classes.root}>
+                        <form className={classes.form} noValidate>
+                            <Grid container spacing={2} justifyContent="center">
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="filled"
+                                        onKeyDown={handleKeypress}
+                                        required
+                                        autoFocus
+                                        className={classes.textField}
+                                        id="id"
+                                        label="Kódové označení"
+                                        value={id}
+                                        onChange={(event) => setId(event.target.value)}
+                                        name="id"
+                                        autoComplete="id"
+                                        InputProps={{
+                                            style: {backgroundColor: 'rgb(232, 240, 254)',}
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="filled"
+                                        onKeyDown={handleKeypress}
+                                        required
+                                        autoFocus
+                                        className={classes.textField}
+
+                                        id="vendor"
+                                        label="Výrobce"
+                                        value={vendor}
+                                        onChange={(event) => setVendor(event.target.value)}
+                                        name="vendor"
+                                        autoComplete="vendor"
+                                        InputProps={{
+                                            style: {backgroundColor: 'rgb(232, 240, 254)',},
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="filled"
+                                        onKeyDown={handleKeypress}
+                                        required
+                                        autoFocus
+                                        className={classes.textField}
+
+                                        style={{margin: "0"}}
+                                        label="Model"
+                                        value={model}
+                                        onChange={(event) => setModel(event.target.value)}
+                                        name="model"
+                                        autoComplete="model"
+                                        InputProps={{
+                                            style: {backgroundColor: 'rgb(232, 240, 254)',},
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="filled"
+                                        onKeyDown={handleKeypress}
+                                        required
+                                        autoFocus
+                                        className={classes.textField}
+
+                                        id="os"
+                                        label="Operační systém"
+                                        value={os}
+                                        onChange={(event) => setOS(event.target.value)}
+                                        name="os"
+                                        autoComplete="os"
+                                        InputProps={{
+                                            style: {backgroundColor: 'rgb(232, 240, 254)',},
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="filled"
+                                        onKeyDown={handleKeypress}
+                                        required
+                                        className={classes.textField}
+                                        autoFocus
+                                        id="osVersion"
+                                        label="Verze operačního systému"
+                                        value={osVersion}
+                                        onChange={(event) => setOSVersion(event.target.value)}
+                                        name="osVersion"
+                                        autoComplete="osVersion"
+                                        InputProps={{
+                                            style: {backgroundColor: 'rgb(232, 240, 254)',},
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="filled"
+                                        onKeyDown={handleKeypress}
+                                        autoFocus
+                                        className={classes.textField}
+
+                                        id="image"
+                                        label="Obrázek (URL)"
+                                        value={imageURL}
+                                        onChange={(event) => setImageURL(event.target.value)}
+                                        name="image"
+                                        autoComplete="image"
+                                        InputProps={{
+                                            style: {backgroundColor: 'rgb(232, 240, 254)',}
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button
+                                        type="reset"
+                                        variant="contained"
+                                        size="large"
+                                        style={{backgroundColor: "black", color: "white"}}
+                                        className={classes.submit}
+                                        onClick={HandleSubmit}
+                                    >
+                                        PŘIDAT
+                                    </Button>
+                                </Grid>
+
+
+                                <Grid item xs={12}>
+                                    <div style={{
+                                        height: "5vh",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center"
+                                    }}>
+                                        {errorOccurenceMessage &&
+                                            <Paper variant="outlined" className={classes.done} data-aos="fade-up">
+                                                <div onClick={() => setErrorOccurenceMessage(false)}
+                                                     className={classes.centerDone}>
+                                                    <Typography variant="subtitle1" align="center">
+                                                        Nesprávně vyplněné pole
+                                                    </Typography>
+                                                    <Icon className={classes.iconDone}>
+                                                        <Error/>
+                                                    </Icon>
+                                                </div>
+                                            </Paper>
+                                        }
+
+                                        {succesCreationMessage &&
+                                            <Paper variant="outlined" className={classes.done} data-aos="fade-up">
+                                                <div onClick={() => setSuccesCreationMessage(false)}
+                                                     className={classes.centerDone}>
+                                                    <Typography variant="subtitle1" align="center">
+                                                        Zařízení bylo úspěšně přidáno
+                                                    </Typography>
+                                                    <Icon className={classes.iconDone}>
+                                                        <Error/>
+                                                    </Icon>
+                                                </div>
+                                            </Paper>
+                                        }
+                                    </div>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="filled"
-                                    onKeyDown={handleKeypress}
-                                    required
-                                    autoFocus
-                                    className={classes.textField}
+                        </form>
+                    </div>
+                </Box>
 
-                                    id="vendor"
-                                    label="Výrobce"
-                                    value={vendor}
-                                    onChange={(event) => setVendor(event.target.value)}
-                                    name="vendor"
-                                    autoComplete="vendor"
-                                    InputProps={{
-                                        style: {backgroundColor: 'rgb(232, 240, 254)',},
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="filled"
-                                    onKeyDown={handleKeypress}
-                                    required
-                                    autoFocus
-                                    className={classes.textField}
+            </Container>
 
-                                    style={{margin: "0"}}
-                                    label="Model"
-                                    value={model}
-                                    onChange={(event) => setModel(event.target.value)}
-                                    name="model"
-                                    autoComplete="model"
-                                    InputProps={{
-                                        style: {backgroundColor: 'rgb(232, 240, 254)',},
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="filled"
-                                    onKeyDown={handleKeypress}
-                                    required
-                                    autoFocus
-                                    className={classes.textField}
-
-                                    id="os"
-                                    label="Operační systém"
-                                    value={os}
-                                    onChange={(event) => setOS(event.target.value)}
-                                    name="os"
-                                    autoComplete="os"
-                                    InputProps={{
-                                        style: {backgroundColor: 'rgb(232, 240, 254)',},
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="filled"
-                                    onKeyDown={handleKeypress}
-                                    required
-                                    className={classes.textField}
-                                    autoFocus
-                                    id="osVersion"
-                                    label="Verze operačního systému"
-                                    value={osVersion}
-                                    onChange={(event) => setOSVersion(event.target.value)}
-                                    name="osVersion"
-                                    autoComplete="osVersion"
-                                    InputProps={{
-                                        style: {backgroundColor: 'rgb(232, 240, 254)',},
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="filled"
-                                    onKeyDown={handleKeypress}
-                                    autoFocus
-                                    className={classes.textField}
-
-                                    id="image"
-                                    label="Obrázek (URL)"
-                                    value={imageURL}
-                                    onChange={(event) => setImageURL(event.target.value)}
-                                    name="image"
-                                    autoComplete="image"
-                                    InputProps={{
-                                        style: {backgroundColor: 'rgb(232, 240, 254)',}
-                                    }}
-                                />
-                            </Grid>
-
-                            <Button
-                                type="reset"
-                                fullWidth
-                                variant="contained"
-                                size="large"
-                                className={classes.submit}
-                                onClick={HandleSubmit}
-                            >
-                                PŘIDAT
-                            </Button>
-
-                        </Grid>
-                        {errorOccurenceMessage ?
-                            <Paper variant="outlined" className={classes.done} data-aos="fade-up">
-                                <div className={classes.centerDone}>
-                                    <Typography variant="subtitle1" align="center">
-                                        Nesprávně vyplněné pole
-                                    </Typography>
-                                    <Icon className={classes.iconDone}>
-                                        <Error/>
-                                    </Icon>
-                                </div>
-                            </Paper>
-                            : ""
-                        }
-                        {succesCreationMessage ?
-                            <Paper variant="outlined" className={classes.done} data-aos="fade-up">
-                                <div className={classes.centerDone}>
-                                    <Typography variant="subtitle1" align="center">
-                                        Zařízení bylo úspěšně přidáno
-                                    </Typography>
-                                    <Icon className={classes.iconDone}>
-                                        <Error/>
-                                    </Icon>
-                                </div>
-                            </Paper>
-                            : ""
-                        }
-                    </form>
-                </div>
-            </Box>
-
-        </Container>
-
-
+        </>
     );
 }
 

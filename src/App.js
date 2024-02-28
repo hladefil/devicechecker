@@ -1,35 +1,20 @@
+import React from 'react';
+import {useEffect, useState} from "react";
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import './App.css';
 import {userContext} from './GlobalState/UserContext';
 import Login from "./Authentication/Login";
-import React from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import {useEffect, useState} from "react";
 import DeviceList from "./Devices/DeviceList"
 import CreateDeviceForm from "./Devices/CreateDeviceForm";
 
-
 function App() {
 
-
-    const [loggedIn, setLoggedIn] = useState(false);
-
-    const [userObject, setUserObject] = useState();
     const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [userRole, setUserRole] = useState("all");
     const [userToken, setUserToken] = useState(null);
 
-    const login = () => {
-        setLoggedIn(true);
-    }
-    const logout = () => {
-        setLoggedIn(false);
-    }
-
-    const user = (value) => {
-        setUserObject(value);
-    }
 
     const id = (value) => {
         setUserId(value);
@@ -71,8 +56,12 @@ function App() {
     }
 
     const getRole = () => {
-        if (userRole == null)
+        const storedRole = sessionStorage.getItem('userRole');
+
+        if (userRole == null && !storedRole)
             return "all"
+        if (storedRole)
+            return storedRole
         return userRole
     }
 
@@ -80,44 +69,44 @@ function App() {
         return userToken
     }
 
-    const getUser = () => {
-        return userObject
-    }
-
-    // useEffect(() => {
-    //     console.log(userObject)
-    // }, [userObject]);
-
     useEffect(() => {
         const storedName = sessionStorage.getItem('userName');
         const storedToken = sessionStorage.getItem('userToken');
         const storedEmail = sessionStorage.getItem('userEmail');
         const storedRole = sessionStorage.getItem('userRole');
 
-        if(userName !== undefined) setUserName(userName)
-        if(storedToken !== undefined) {
-            console.log(storedToken)
-            setUserToken(storedToken)
-        }
-        if(storedEmail !== undefined) setUserEmail(storedEmail)
-        if(storedRole !== undefined) setUserRole(storedRole)
+        if (storedName !== undefined) setUserName(storedName)
+        if (storedToken !== undefined) setUserToken(storedToken)
+        if (storedEmail !== undefined) setUserEmail(storedEmail)
+        if (storedRole !== undefined) setUserRole(storedRole)
+        else setUserRole("all")
     }, []);
 
-    // function renderSwitch() {
-    //     switch (role) {
-    //         case "admin":
-    //             return <>
-    //                 <Route exact path="/" component={Login}/>
-    //             </>
-    //         case "user":
-    //             return <>
-    //                 <Route exact path="/" component={Login}/>
-    //             </>
-    //         default:
-    //             return;
-    //     }
-    // }
+    function renderSwitch() {
+        switch (getRole()) {
+            case "admin":
+                return <>
+                    <Route path="/" element={<Login/>}/>
+                    <Route path="/devices" element={<DeviceList/>}/> :
+                    <Route path="/createdevice" element={<CreateDeviceForm/>}/> :
+                    <Route path="*" element={<Navigate to="/"/>}/>
+                </>
+            case "user":
+                return <>
+                    <Route path="/" element={<Login/>}/>
+                    <Route path="/devices" element={<DeviceList/>}/> :
+                    <Route path="*" element={<Navigate to="/"/>}/>
+                </>
+            case "all":
+                return <>
+                    <Route path="/" element={<Login/>}/>
+                    <Route path="*" element={<Navigate to="/"/>}/>
+                </>
+            default:
+                return;
 
+        }
+    }
 
 
     return (
@@ -131,41 +120,28 @@ function App() {
                 <div className="layer"/>
             </div>
             <main>
+
                 <userContext.Provider value={{
-                    isLoggedIn: loggedIn,
-                    login: login,
-                    logout: logout,
                     id: id,
                     name: name,
                     email: email,
                     role: role,
                     token: token,
-                    user: user,
 
-                    getUser: getUser,
                     getId: getId,
                     getName: getName,
                     getRole: getRole,
                     getEmail: getEmail,
                     getToken: getToken
-
-
                 }}>
                     <Router>
                         <Routes>
-                            {/*{renderSwitch()}*/}
-                            <Route path="/" element={<Login/>}/>
-                            <Route path="/devices" element={<DeviceList/>}/>
-                            {getRole() === "admin" &&
-                            <Route path="/createdevice" element={<CreateDeviceForm/>}/>
-                            }
+                            {renderSwitch()}
                         </Routes>
                     </Router>
                 </userContext.Provider>
 
-
             </main>
-
         </div>
     );
 }

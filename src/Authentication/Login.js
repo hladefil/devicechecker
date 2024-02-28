@@ -1,12 +1,7 @@
 import React, {useContext, useState} from "react"
-import {Typography, Grid, Paper, Icon, IconButton, Box} from "@material-ui/core";
-import {makeStyles, InputAdornment} from "@material-ui/core";
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Container from '@material-ui/core/Container';
-import {Error, MailOutlined, Visibility, VisibilityOff,} from "@material-ui/icons";
 import {useNavigate} from "react-router-dom";
+import {Typography, Grid, Paper, Icon, IconButton, makeStyles, InputAdornment, Box, CssBaseline, Button, TextField, Container} from "@material-ui/core";
+import {Error, MailOutlined, Visibility, VisibilityOff,} from "@material-ui/icons";
 import {userContext} from "../GlobalState/UserContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(2),
         paddingBottom: theme.spacing(2),
         paddingRight: theme.spacing(2),
-
         width: "100%",
     },
     done: {
@@ -52,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     iconDone: {
         marginLeft: theme.spacing(2),
     },
-
 }));
 
 
@@ -87,8 +80,6 @@ function Login() {
                 else setSyntaxError(true);
                 return response.json()
             }).then(data => {
-
-            //context.user(data)
 
             context.id(data.id)
             context.name(data.name)
@@ -205,8 +196,7 @@ function Login() {
                 </div>
             </Box>
 
-
-            {syntaxError ?
+            {syntaxError &&
                 <Paper variant="outlined" className={classes.done} data-aos="fade-up">
                     <div className={classes.centerDone}>
                         <Typography variant="subtitle1" align="center">
@@ -217,7 +207,6 @@ function Login() {
                         </Icon>
                     </div>
                 </Paper>
-                : ""
             }
         </Container>
 

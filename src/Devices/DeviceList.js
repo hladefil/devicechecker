@@ -1,14 +1,10 @@
 import React, {useContext, useEffect, useState} from "react"
-import {Divider, IconButton, Paper, Typography} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core";
+import {useNavigate} from "react-router-dom";
+import {IconButton, Typography, Button, makeStyles} from "@material-ui/core";
+import {FormControl, InputLabel, MenuItem, Container, Select, Grid} from '@mui/material';
+import {Clear} from "@material-ui/icons";
 import {userContext} from "../GlobalState/UserContext";
 import Device from "./Device"
-import {FormControl, InputLabel, MenuItem} from '@mui/material';
-import {useNavigate} from "react-router-dom";
-import Select, {SelectChangeEvent} from '@mui/material/Select';
-import {Clear} from "@material-ui/icons";
-import Button from '@material-ui/core/Button';
-
 
 
 const useStyles = makeStyles(theme => ({
@@ -33,11 +29,13 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: 'rgba(255, 255, 255, 0)',
         height: "12vh",
         padding: "3vh",
-        // gap: "25vw",
+        [theme.breakpoints.up('md')]: {
+            height: "8vh",
 
+        },
     },
     headerScroll: {
-        backgroundColor: "blue"
+        backgroundColor: "blue",
     },
     logoutText: {
         color: "white",
@@ -51,25 +49,27 @@ const useStyles = makeStyles(theme => ({
     },
 
     deviceImages: {
-        width: "15%"
+        width: "15%",
+        [theme.breakpoints.up('md')]: {
+            width: "10%",
+
+        },
     },
     controlSection: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        width: "85vw",
-        marginLeft: "6.5em"
+        backgroundColor: "blue",
     },
     filters: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        gap: "2em",
-        padding: "1.5em",
-        width: "35vw",
+
     },
     selectionField: {
         backgroundColor: "white",
+        marginRight: "4em",
         width: "200px"
     },
     createDeviceButton: {
@@ -80,12 +80,20 @@ const useStyles = makeStyles(theme => ({
         },
     },
     clearButton: {
+        paddingLeft: "0.7em",
+        paddingRight: "0.7em",
         backgroundColor: "white",
         '&:hover': {
             backgroundColor: 'rgba(255, 255, 255, 0.7)',
 
         },
     },
+    mainBox: {
+        display: "flex",
+        flexDirection: "row",
+        textAlign: "center",
+        marginTop: "2em"
+    }
 
 
 }))
@@ -139,23 +147,21 @@ function DeviceList() {
     };
 
     const HandleClearSelections = () => {
-        setVendor("")
-        setOSystem("")
-        setArrayOfDevices(originalArrayOfDevices)
+        console.log(vendor)
+        console.log(oSystem)
+        if (vendor !== "") setVendor("")
+        if (oSystem !== "") setOSystem("")
+        else setArrayOfDevices(originalArrayOfDevices)
     }
 
     useEffect(() => {
-        // Function to handle scroll events
         const handleScroll = () => {
-            // Check the scroll position and update state accordingly
             const scrolled = window.scrollY > 0;
             setIsScrolled(scrolled);
         };
 
-        // Attach the event listener to the scroll event
         window.addEventListener('scroll', handleScroll);
 
-        // Clean up the event listener when the component is unmounted
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -164,9 +170,7 @@ function DeviceList() {
 
     useEffect(() => {
         const token = context.getToken()
-        //console.log("THIS IS TOKEN : " + token)
         if (token !== null) {
-
             const requestOptions = {
                 method: 'GET',
                 headers: {
@@ -182,9 +186,6 @@ function DeviceList() {
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
                 });
-            /* Aos.init({
-                 duration: 2000
-             });*/
         }
     }, [context.token]);
 
@@ -219,14 +220,6 @@ function DeviceList() {
 
     }, [arrayOfDevices]);
 
-    // useEffect(() => {
-    //     arrayOfDevices.forEach((item, index) => {
-    //         console.log(`Object ${index + 1}:`, item);
-    //     });
-    // }, [arrayOfDevices]);
-
-    const label = {inputProps: {'aria-label': 'Checkbox demo'}};
-
     const handleLogoutCLick = () => {
 
         sessionStorage.removeItem('userToken');
@@ -257,60 +250,67 @@ function DeviceList() {
                     </Typography>
                 </div>
             </div>
-            <div className={classes.controlSection}>
-                <div className={classes.filters}>
-                    <FormControl variant="filled">
-                        <InputLabel>Systém</InputLabel>
-                        <Select
-                            className={classes.selectionField}
-                            value={oSystem || ''}
-                            label="Systém"
-                            onChange={handleChangeOsSystem}
-                            style={{backgroundColor: 'white'}}
+            <Container sx={{maxWidth: '80%'}} maxWidth={false}>
+                <div className={classes.mainBox}>
+                    <div style={{display: "flex", justifyContent: "flex-start", width: "80%"}}>
 
-                        >
-                            {oSystemList.map((item, index) => (
-                                <MenuItem value={item} key={index}>{item}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl variant="filled">
-                        <InputLabel>Výrobce</InputLabel>
-                        <Select
-                            value={vendor || ''}
-                            label="Výrobce"
-                            className={classes.selectionField}
-                            onChange={handleChangeVendor}
-                            style={{backgroundColor: 'white'}}
-                        >
-                            {vendorList.map((item, index) => (
-                                <MenuItem value={item} key={index}>{item}</MenuItem>
-                            ))}
+                        <FormControl variant="filled">
+                            <InputLabel>Systém</InputLabel>
+                            <Select
+                                className={classes.selectionField}
+                                value={oSystem || ''}
+                                label="Systém"
+                                onChange={handleChangeOsSystem}
+                                style={{backgroundColor: 'white'}}
 
-                        </Select>
-                    </FormControl>
-                    <IconButton onClick={HandleClearSelections} className={classes.clearButton} color="primary">
-                        <Clear/>
-                    </IconButton>
+                            >
+                                {oSystemList.map((item, index) => (
+                                    <MenuItem value={item} key={index}>{item}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl variant="filled">
+                            <InputLabel>Výrobce</InputLabel>
+                            <Select
+                                value={vendor || ''}
+                                label="Výrobce"
+                                className={classes.selectionField}
+                                onChange={handleChangeVendor}
+                                style={{backgroundColor: 'white'}}
+                            >
+                                {vendorList.map((item, index) => (
+                                    <MenuItem value={item} key={index}>{item}</MenuItem>
+                                ))}
+
+                            </Select>
+                        </FormControl>
+                        <IconButton onClick={HandleClearSelections} className={classes.clearButton} color="primary">
+                            <Clear/>
+                        </IconButton>
+                    </div>
+                    <div style={{display: "flex", justifyContent: "flex-end", width: "20%"}}>
+                        {context.getRole() === "admin" && (
+                            <Button type="reset"
+                                    variant="contained"
+                                    size="large"
+                                    className={classes.createDeviceButton}
+                                    onClick={handleCreateButtonClick}
+                            >
+                                PŘIDAT ZAŘÍZENÍ
+                            </Button>
+                        )}
+                    </div>
                 </div>
-
-                {context.getRole() && (
-                    <Button type="reset"
-                            variant="contained"
-                            size="large"
-                            color="primary"
-                            className={classes.createDeviceButton}
-                            onClick={handleCreateButtonClick}
-                    >
-                        PŘIDAT ZAŘÍZENÍ
-                    </Button>
-                )}
-            </div>
-            <div className={classes.root}>
-                {arrayOfDevices.map((device, index) => (
-                    <Device key={index} data={device}/>
-                ))}
-            </div>
+            </Container>
+            <Container sx={{maxWidth: '80%'}} maxWidth={false} style={{marginTop: "2em"}}>
+                <Grid container spacing={25} rowSpacing={0} columnSpacing={{xs: 2, sm: 2, md: 6}}>
+                    {arrayOfDevices.map((device, index) => (
+                        <Grid key={index} item xs={3}>
+                            <Device key={index} data={device}/>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Container>
         </>
     )
 }
